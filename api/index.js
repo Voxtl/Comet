@@ -19,7 +19,7 @@ app.post('/auth/login', (req, res) => {
     const obj = {
         'loginId': req.body.username,
         'password': req.body.password,
-        'applicationId': 'ea900ff1-7c08-4f24-afdb-2a3298ae6e99'
+        'applicationId': process.env.PASSPORT_APPLICATION_ID
     };
 
     client.login(obj)
