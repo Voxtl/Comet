@@ -5,7 +5,7 @@ const multer = require('multer')().single();
 
 const app = express();
 
-const client = new FusionAuthClient('irDUikICwPQnRtB0Z1WUfh0GbvvnkiekonT_Z_zMz2E', 'http://passport.voxtl.tv:9011');
+const client = new FusionAuthClient(process.env.PASSPORT_API_KEY, 'http://passport.voxtl.tv:9011');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
