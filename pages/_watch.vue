@@ -127,7 +127,7 @@
 
                                 let markup = '' +
                                     '<div class="item" style="display: flex; margin-bottom: 0.2em;">' +
-                                        '<img class="ui avatar image" src="https://img.voxtl.tv/user/avatar/${this.streamer.user.id}.webp" style="align-self: center;">' +
+                                        '<img class="ui avatar image" src="https://img.voxtl.tv/user/avatar/' + data.viewer.id + '.webp" style="align-self: center;">' +
                                         '<div class="content" style="display: flex;">' +
                                             '<div class="header" style="font-size: 1.2em; align-self: center; color: #ffffff; font-weight: 700;">' + data.viewer.username + '</div>' +
                                             '<div class="description" style="font-size: 1em; align-self: center; margin-left: 0.4em; word-break: break-word; color: #BABABA;" id="' + id + '"></div>' +
