@@ -1,91 +1,74 @@
 <template>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <nuxt-link class="navbar-item" to="/" width="28" height="28">
-                <img src="https://static.voxtl.com/media/logo-alt.png" width="28" height="28">
-            </nuxt-link>
+    <div id="header">
+        <div class="ui fixed inverted secondary menu">
+            <nuxt-link to="/" class="item img"><img src="https://static.voxtl.com/media/logo-alt.png"></nuxt-link>
 
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
-        <div class="navbar-menu">
-            <div class="navbar-start">
-                <nuxt-link to="/browse/following" v-if="$auth.loggedIn" class="navbar-item" exact-active-class="is-active" active-class="is-active">Following</nuxt-link>
-                <nuxt-link to="/browse" class="navbar-item" exact-active-class="is-active" active-class="is-active">Browse</nuxt-link>
-                <nuxt-link to="/dashboard/stream" class="navbar-item" exact-active-class="is-active" active-class="is-active">Start Streaming</nuxt-link>
-            </div>
-            <div v-if="$auth.loggedIn" class="navbar-end">
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">{{ $auth.user.username }}</a>
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">no</a>
+            <nuxt-link to="/browse/following" v-if="this.$auth.loggedIn" class="item" exact-active-class="active">Following</nuxt-link>
+            <nuxt-link to="/browse" class="item" exact-active-class="active">Browse</nuxt-link>
+            <nuxt-link to="/dashboard/stream" class="item" exact-active-class="active">Start Streaming</nuxt-link>
+
+            <div class="right menu" v-if="this.$auth.loggedIn">
+                <div class="ui dropdown item">
+                    <div class="item p-0"><img class="ui avatar image" :src="`https://img.voxtl.tv/user/avatar/${this.$auth.user.user.id}.webp`"></div>
+                    <div class="text">{{ this.$auth.user.user.username }}</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <nuxt-link class="item" :to="{ path: this.$auth.user.user.username }">
+                            <i class="video icon"></i>
+                            Channel
+                        </nuxt-link>
+                        <nuxt-link class="item" to="/dashboard/manage">
+                            <i class="tachometer alternate icon"></i>
+                            Dashboard
+                        </nuxt-link>
+                        <nuxt-link class="item" to="/settings/profile">
+                            <i class="cog icon"></i>
+                            Settings
+                        </nuxt-link>
+                        <div class="divider"></div>
+                        <a class="item" @click="logout">
+                            <i class="sign out alternate icon"></i>
+                            Logout
+                        </a>
                     </div>
                 </div>
             </div>
-            <div v-else class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <nuxt-link to="/auth/register" class="button is-primary"><strong>Register</strong></nuxt-link>
-                        <nuxt-link to="/auth/login" class="button is-light">Login</nuxt-link>
-                    </div>
+            <div class="right menu" v-else>
+                <div class="item pr-0">
+                    <nuxt-link class="ui button" to="/auth/login">Login</nuxt-link>
+                </div>
+                <div class="item pl-0">
+                    <nuxt-link class="ui primary button" to="/auth/register">Register</nuxt-link>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
 </template>
 
 <script>
     export default {
         name: "Navbar",
+        methods: {
+            async logout() {
+                await this.$auth.logout();
+            }
+        }
     }
 </script>
 
 <style>
-    nav.navbar {
-        background-color: var(--secondary);
+    body div#header .ui.menu {
+        border-radius: 0 !important;
+        padding: 0em 1em !important;
+        background-color: var(--secondary) !important;
+        flex-shrink: 0 !important;
     }
 
-    nav.navbar div.navbar-brand a.navbar-item {
-        padding-left: 2em;
-        padding-right: 2em;
+    body div#header ui.menu > a.item {
+        color: var(--text) !important;
     }
 
-    nav.navbar div.navbar-brand a.navbar-item:hover {
-        background-color: var(--secondary);
-    }
-
-    nav.navbar a.navbar-item {
-        color: var(--text);
-    }
-
-    nav.navbar a.navbar-link {
-        color: var(--text);
-    }
-
-    nav.navbar a.navbar-item:hover {
-        background-color: var(--main);
-    }
-
-    nav.navbar a.navbar-item.is-active {
-        background-color: var(--main) !important;
-    }
-
-    nav.navbar div.navbar-item.has-dropdown:hover {
-        background-color: var(--main);
-    }
-
-    nav.navbar div.navbar-item.has-dropdown a.navbar-link:active {
-        background-color: var(--main);
-    }
-
-    nav.navbar div.navbar-item.has-dropdown a.navbar-link:hover {
-        background-color: var(--main);
-    }
-
-    nav.navbar div.navbar-item.has-dropdown a.navbar-link:not(.is-arrowless)::after {
-        border-color: var(--text);
+    body div#header a.item.img:hover {
+        background-color: transparent !important;
     }
 </style>

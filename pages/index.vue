@@ -1,27 +1,10 @@
 <template>
-    <div class="container">
-        <div>
-            <Logo/>
-            <h1 class="title">
-                comet
-            </h1>
-            <div class="links">
-                <a
-                    href="https://nuxtjs.org/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="button--green"
-                >
-                    Documentation
-                </a>
-                <a
-                    href="https://github.com/nuxt/nuxt.js"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="button--grey"
-                >
-                    GitHub
-                </a>
+    <div class="ui container">
+        <div class="ui card">
+            <div class="content">
+                Welcome to Voxtl 0.2
+                <br><br>
+                {{ this.$auth.getToken('local') }}
             </div>
         </div>
     </div>

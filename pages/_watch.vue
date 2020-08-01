@@ -1,0 +1,174 @@
+<template>
+    <div class="ui grid m-0">
+        <div id="player-column" class="twelve wide column" style="height: calc(100vh - 57px); overflow-y: scroll;">
+            <div>
+                <div id="player"></div>
+            </div>
+            <div class="ui fluid card">
+                <div class="content">
+                    <div class="ui items">
+                        <div class="ui item">
+                            <div class="ui tiny circular image" style="display: flex;">
+                                <img :src="'https://cdn.voxtl.com/u/a/' + this.streamer.user.id" style="align-self: center;">
+                            </div>
+                            <div class="middle aligned content">
+                                <div class="left floated">
+                                    <h2 class="mb-0" style="font-size: 1.65em;">{{ this.streamer.user.username }}</h2>
+                                    <h3 class="mv-0"><span id="title"></span></h3>
+                                    <div class="ui label">
+                                        <i class="gamepad icon"></i>
+                                        <span id="category"></span>
+                                    </div>
+                                    <div class="ui label">
+                                        <i class="users icon"></i>
+                                        Team
+                                    </div>
+                                </div>
+                                <div class="right floated" style="text-align: right;">
+                                    <div class="ui label">
+                                        <i class="eye icon"></i>
+                                        <span id="viewers">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="chat-column" class="four wide column" style="height: calc(100vh - 57px); right: 0; position: fixed; background-color: var(--secondary);">
+            <div id="chat" class="ui list" style="height: 100%; display: flex; flex-direction: column;">
+                <div style="overflow-y: scroll;" id="messages"></div>
+                <div style="margin-top: auto; padding-top: 1em;">
+                    <form class="ui form" id="chat-input" @submit.prevent="sendMessage">
+                        <div class="field">
+                            <div class="ui icon input mb-2">
+                                <i class="smile outline link icon"></i>
+                                <input type="text" v-model="message" autocomplete="off" placeholder="Say something...">
+                            </div>
+                            <button class="tiny circular ui right floated icon button" type="submit">
+                                Send <i class="paper plane icon"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import axios from 'axios';
+
+    export default {
+        name: "watch",
+        head() {
+            return {
+                title: `${this.streamer.user.username} | Voxtl`,
+                script: [
+                    { src: 'https://cdn.jsdelivr.net/npm/hls.js@latest' },
+                    {
+                        src: 'http://alpha.larval.uk/dist/development/ovenplayer/ovenplayer.js',
+                        callback: () => (this.ovenPlayerLoaded = true)
+                    },
+                    {
+                        skip: !this.ovenPlayerLoaded,
+                        innerHTML: `
+                            let player = OvenPlayer.create("player", {
+                                sources: [
+                                    {
+                                        "file": 'ws://distribution-1.lon-uk.voxtl.com:3333/live/${this.streamer.user.id}_source',
+                                        "type": "webrtc",
+                                        "label": "Source (Velocity)"
+                                    },
+                                    {
+                                        "file": 'http://distribution-1.lon-uk.voxtl.com/live/${this.streamer.user.id}_source/playlist.m3u8',
+                                        "type": "hls",
+                                        "label": "Source (HLS)"
+                                    },
+                                ],
+                                autoStart: true
+                            });
+
+                            player.on('stateChanged', function(data) {
+                                if(data.newstate === 'error') {
+
+                                }
+                            });
+                        `
+                    },
+                    {
+                        innerHTML: `
+                            function randomString(length) {
+                               let result = '';
+                               const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                               const charactersLength = characters.length;
+
+                               for (let i = 0; i < length; i++) {
+                                  result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                               }
+
+                               return result;
+                            }
+
+                            const socket = new WebSocket('ws://51.15.105.208:9001/${this.streamer.user.id}');
+
+                            socket.addEventListener('open', function(event) {
+                                socket.send(JSON.stringify({
+                                    'event': 'join',
+                                    'data': '${this.$auth.getToken('local').substr(7)}'
+                                }));
+                            });
+
+                            socket.addEventListener('message', function(event) {
+                                let data = JSON.parse(event.data);
+
+                                const id = randomString(8);
+
+                                let markup = '' +
+                                    '<div class="item" style="display: flex; margin-bottom: 0.2em;">' +
+                                        '<img class="ui avatar image" src="https://cdn.voxtl.com/u/a/${this.streamer.user.id}" style="align-self: center;">' +
+                                        '<div class="content" style="display: flex;">' +
+                                            '<div class="header" style="font-size: 1.2em; align-self: center; color: #ffffff; font-weight: 700;">' + data.viewer.username + '</div>' +
+                                            '<div class="description" style="font-size: 1em; align-self: center; margin-left: 0.4em; word-break: break-word; color: #BABABA;" id="' + id + '"></div>' +
+                                        '</div>' +
+                                    '</div>';
+
+                                $('#messages').append(markup);
+                                document.getElementById(id).appendChild(document.createTextNode(decodeURI(data.message)));
+                            });
+                        `
+                    }
+                ]
+            }
+        },
+        data() {
+            return {
+                ovenPlayerLoaded: false,
+                message: ''
+            }
+        },
+        asyncData(context) {
+            return axios.get(`http://51.15.105.208:3030/v1/user/${context.params.watch}/info`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
+                return {
+                    streamer: res.data.result
+                };
+            }).catch(error => {
+                console.error(error);
+            });
+        },
+        methods: {
+            async sendMessage() {
+                socket.send(JSON.stringify({
+                    'event': 'message',
+                    'data': encodeURI(this.message)
+                }));
+
+                this.message = '';
+            }
+        }
+    }
+</script>
+
+<style scoped>
+</style>

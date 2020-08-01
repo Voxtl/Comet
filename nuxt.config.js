@@ -1,27 +1,37 @@
 export default {
-    mode: 'universal',
-    target: 'server',
+    mode: 'spa',
+    target: 'static',
     head: {
-        title: process.env.npm_package_name || '',
+        title: process.env.npm_package_name || 'Voxtl',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.css' }
+        ],
+        script: [
+            { src: 'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js' },
+            { src: 'https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.js' },
+            { innerHTML: `$('.dropdown').dropdown({ on: 'hover' });`, type: 'text/javascript' }
         ]
     },
     css: [],
-    plugins: [],
+    plugins: [
+        { src: '@/plugins/vue-content-placeholders.js' }
+    ],
     components: true,
     buildModules: [],
     modules: [
-        '@nuxtjs/bulma',
         '@nuxtjs/axios',
-        '@nuxtjs/auth'
+        '@nuxtjs/auth',
+        ['nuxt-matomo', { matomoUrl: 'https://analytics.voxtl.tv/', siteId: 1 }]
     ],
-    axios: {},
+    axios: {
+        baseURL: 'https://api.voxtl.tv/'
+    },
     build: {
         postcss: {
             preset: {
@@ -31,7 +41,6 @@ export default {
             }
         },
     },
-    serverMiddleware: ["~/api/index"],
     auth: {
         redirect: {
             login: '/',
@@ -39,10 +48,13 @@ export default {
         },
         strategies: {
             local: {
-                login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
-                logout: false,
-                user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+                endpoints: {
+                    login: { url: '/v1/internal/auth/login', method: 'post', propertyName: 'result.token' },
+                    logout: false,
+                    user: { url: '/v1/user/@me/info', method: 'get', propertyName: 'result' }
+                }
             }
-        }
+        },
+        resetOnError: true
     }
 }
