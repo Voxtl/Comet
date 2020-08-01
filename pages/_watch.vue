@@ -111,7 +111,7 @@
                                return result;
                             }
 
-                            const socket = new WebSocket('ws://51.15.105.208:9001/${this.streamer.user.id}');
+                            const socket = new WebSocket('wss://ws.voxtl.tv/${this.streamer.user.id}');
 
                             socket.addEventListener('open', function(event) {
                                 socket.send(JSON.stringify({
