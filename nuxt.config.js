@@ -16,7 +16,8 @@ export default {
             { src: 'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js' },
             { src: 'https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.js' },
             { innerHTML: `$('.dropdown').dropdown({ on: 'hover' });`, type: 'text/javascript' }
-        ]
+        ],
+        __dangerouslyDisableSanitizers: ['script']
     },
     css: [],
     plugins: [
