@@ -9,7 +9,7 @@
                     <div class="ui items">
                         <div class="ui item">
                             <div class="ui tiny circular image" style="display: flex;">
-                                <img :src="'https://cdn.voxtl.com/u/a/' + this.streamer.user.id" style="align-self: center;">
+                                <img :src="`https://img.voxtl.tv/user/avatar/${this.streamer.user.id}.webp`" style="align-self: center;">
                             </div>
                             <div class="middle aligned content">
                                 <div class="left floated">
@@ -68,7 +68,7 @@
                 script: [
                     { src: 'https://cdn.jsdelivr.net/npm/hls.js@latest' },
                     {
-                        src: 'http://alpha.larval.uk/dist/development/ovenplayer/ovenplayer.js',
+                        src: 'https://static.voxtl.tv/player/ovenplayer.js',
                         callback: () => (this.ovenPlayerLoaded = true)
                     },
                     {
@@ -127,7 +127,7 @@
 
                                 let markup = '' +
                                     '<div class="item" style="display: flex; margin-bottom: 0.2em;">' +
-                                        '<img class="ui avatar image" src="https://cdn.voxtl.com/u/a/${this.streamer.user.id}" style="align-self: center;">' +
+                                        '<img class="ui avatar image" src="https://img.voxtl.tv/user/avatar/${this.streamer.user.id}.webp" style="align-self: center;">' +
                                         '<div class="content" style="display: flex;">' +
                                             '<div class="header" style="font-size: 1.2em; align-self: center; color: #ffffff; font-weight: 700;">' + data.viewer.username + '</div>' +
                                             '<div class="description" style="font-size: 1em; align-self: center; margin-left: 0.4em; word-break: break-word; color: #BABABA;" id="' + id + '"></div>' +
