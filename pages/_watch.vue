@@ -149,7 +149,7 @@
             }
         },
         asyncData(context) {
-            return axios.get(`http://51.15.105.208:3030/v1/user/${context.params.watch}/info`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
+            return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/info`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
                 return {
                     streamer: res.data.result
                 };
