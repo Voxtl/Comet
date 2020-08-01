@@ -1,12 +1,10 @@
 <template>
-    <client-only>
-        <body class="dark">
-            <Navbar />
-            <div class="content" style="padding-top: 57px;">
-                <Nuxt />
-            </div>
-        </body>
-    </client-only>
+    <div>
+        <Navbar />
+        <div class="content" style="padding-top: 57px;">
+            <Nuxt />
+        </div>
+    </div>
 </template>
 
 <style>
@@ -83,6 +81,11 @@
     export default {
         components: {
             Navbar
+        },
+        mounted() {
+            $('.dropdown').dropdown({
+                on: 'hover'
+            });
         }
     }
 </script>

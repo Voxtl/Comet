@@ -66,7 +66,7 @@
             return {
                 title: `${this.streamer.user.username} | Voxtl`,
                 script: [
-                    { src: 'https://cdn.jsdelivr.net/npm/hls.js@latest' },
+                    { src: 'https://static.voxtl.tv/script/hls.js' },
                     {
                         src: 'https://static.voxtl.tv/player/ovenplayer.js',
                         callback: () => (this.ovenPlayerLoaded = true)

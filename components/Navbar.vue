@@ -1,7 +1,7 @@
 <template>
     <div id="header">
         <div class="ui fixed inverted secondary menu">
-            <nuxt-link to="/" class="item img"><img src="https://static.voxtl.com/media/logo-alt.png"></nuxt-link>
+            <nuxt-link to="/" class="item img"><img src="https://static.voxtl.tv/media/logo-alt.png"></nuxt-link>
 
             <nuxt-link to="/browse/following" v-if="this.$auth.loggedIn" class="item" exact-active-class="active">Following</nuxt-link>
             <nuxt-link to="/browse" class="item" exact-active-class="active">Browse</nuxt-link>

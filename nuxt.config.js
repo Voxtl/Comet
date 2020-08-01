@@ -9,15 +9,13 @@ export default {
             { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-            { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.css' }
+            { rel: 'icon', type: 'image/x-icon', href: 'https://static.voxtl.tv/favicons/favicon.ico' },
+            { rel: 'stylesheet', type: 'text/css', href: 'https://static.voxtl.tv/fomantic/semantic.min.css' }
         ],
         script: [
-            { src: 'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js' },
-            { src: 'https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.js' },
-            { innerHTML: `$('.dropdown').dropdown({ on: 'hover' });`, type: 'text/javascript' }
-        ],
-        __dangerouslyDisableSanitizers: ['script']
+            { src: 'https://static.voxtl.tv/script/jquery.js' },
+            { src: 'https://static.voxtl.tv/fomantic/semantic.min.js' }
+        ]
     },
     css: [],
     plugins: [
