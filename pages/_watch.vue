@@ -17,11 +17,11 @@
                                     <h3 class="mv-0"><span id="title"></span></h3>
                                     <div class="ui label">
                                         <i class="gamepad icon"></i>
-                                        <span id="category"></span>
+                                        <span id="category">Loading...</span>
                                     </div>
                                     <div class="ui label">
                                         <i class="users icon"></i>
-                                        Team
+                                        <span id="team">Loading...</span>
                                     </div>
                                 </div>
                                 <div class="right floated" style="text-align: right;">
@@ -116,13 +116,12 @@
                             socket.addEventListener('open', function(event) {
                                 socket.send(JSON.stringify({
                                     'event': 'join',
-                                    'data': '${this.$auth.getToken('local').substr(7)}'
+                                    'data': '${this.$auth.loggedIn ? this.$auth.getToken('local').substr(7) : 'guest'}'
                                 }));
                             });
 
                             socket.addEventListener('message', function(event) {
                                 let data = JSON.parse(event.data);
-
                                 const id = randomString(8);
 
                                 let markup = '' +
