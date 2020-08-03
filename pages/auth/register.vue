@@ -5,6 +5,11 @@
                 <div class="column">
                     <br><br><br><br><br>
                     <h2 style="text-align: center">Register to Voxtl</h2>
+
+                    <div :class="`ui ${this.error.type} message`" v-if="error.shown">
+                        {{ this.error.message }}
+                    </div>
+
                     <form class="ui form" method="post" @submit.prevent="registerUser">
                         <div class="field">
                             <label class="color white">Username</label>
@@ -114,16 +119,33 @@
                     birthday: '',
                     birthmonth: '',
                     birthyear: '',
+                },
+                error: {
+                    shown: false,
+                    type: '',
+                    message: ''
                 }
             }
         },
         methods: {
             async registerUser() {
-                await this.$axios.post('https://api.voxtl.tv/v1/internal/auth/register', this.register).then(
-                    this.$router.push('/auth/login')
-                ).catch(error => {
-                        console.log(error);
-                    });
+                await this.$axios.post('https://api.voxtl.tv/v1/internal/auth/register', this.register)
+                    .then(res => {
+                        let resp = JSON.decode(res.data);
+
+                        if(resp.status === 200) {
+                            this.$router.push('/auth/login')
+                        } else {
+                            this.error.shown = true;
+                            this.error.type = 'error';
+                            this.error.message = err.response.data;
+                        }
+                    })
+                    .catch(err => {
+                        this.error.shown = true;
+                        this.error.type = 'error';
+                        this.error.message = err.response;
+                    })
             }
         }
     }

@@ -5,6 +5,11 @@
                 <div class="column">
                     <br><br><br><br><br>
                     <h2 style="text-align: center">Login to Voxtl</h2>
+
+                    <div :class="`ui ${this.error.type} message`" v-if="error.shown">
+                        {{ this.error.message }}
+                    </div>
+
                     <form class="ui form" method="post" @submit.prevent="loginUser">
                         <div class="field">
                             <label class="color white">Username</label>
@@ -35,17 +40,24 @@
                 login: {
                     username: '',
                     password: ''
+                },
+                error: {
+                    shown: false,
+                    type: '',
+                    message: ''
                 }
             }
         },
         methods: {
             async loginUser() {
-                try {
-                    await this.$auth.logout();
-                    await this.$auth.loginWith('local', { data: this.login });
-                } catch(err) {
-                    console.log(`Login error: ${err}`);
-                }
+                await this.$auth.logout();
+                await this.$auth.loginWith('local', { data: this.login })
+                    .then()
+                    .catch(err => {
+                        this.error.shown = true;
+                        this.error.type = 'error';
+                        this.error.message = err.response.data;
+                    });
             }
         }
     }
