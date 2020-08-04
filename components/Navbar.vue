@@ -13,7 +13,7 @@
                     <div class="text">{{ this.$auth.user.user.username }}</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <nuxt-link class="item" :to="{ path: this.$auth.user.user.username }">
+                        <nuxt-link class="item" :to="{ path: '/' + this.$auth.user.user.username }">
                             <i class="video icon"></i>
                             Channel
                         </nuxt-link>
