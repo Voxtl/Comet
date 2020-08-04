@@ -1,10 +1,9 @@
 <template>
     <div class="ui container">
+        <br>
         <div class="ui card">
             <div class="content">
                 Welcome to Voxtl 0.2
-                <br><br>
-                {{ this.$auth.getToken('local') }}
             </div>
         </div>
     </div>
