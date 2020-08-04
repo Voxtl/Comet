@@ -74,7 +74,7 @@
                     {
                         skip: !this.ovenPlayerLoaded,
                         innerHTML: `
-                            let player = OvenPlayer.create("player", {
+                            player = OvenPlayer.create("player", {
                                 sources: [
                                     {
                                         "file": 'ws://distribution-1.lon-uk.voxtl.com:3333/live/${this.streamer.user.id}_source',
@@ -95,7 +95,8 @@
 
                                 }
                             });
-                        `
+                        `,
+                        body: true
                     },
                     {
                         innerHTML: `
@@ -111,7 +112,7 @@
                                return result;
                             }
 
-                            const socket = new WebSocket('wss://ws.voxtl.tv/${this.streamer.user.id}');
+                            socket = new WebSocket('wss://ws.voxtl.tv/${this.streamer.user.id}');
 
                             socket.addEventListener('open', function(event) {
                                 socket.send(JSON.stringify({
@@ -165,7 +166,13 @@
 
                 this.message = '';
             }
-        }
+        },
+        // mounted() {
+        //     let ovenplayerScript = document.createElement('script');
+        //     ovenplayerScript.setAttribute('src', 'https://azotosolutions.com/play/dist/development/ovenplayer/ovenplayer.js');
+        //
+        //     document.head.appendChild(ovenplayerScript);
+        // }
     }
 </script>
 
