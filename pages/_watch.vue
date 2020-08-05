@@ -9,7 +9,7 @@
                     <div class="ui items">
                         <div class="ui item">
                             <div class="ui tiny circular image" style="display: flex;">
-                                <img :src="`https://img.voxtl.tv/user/avatar/${this.streamer.user.id}.webp`" style="align-self: center;">
+                                <img :src="`https://img.voxtl.tv/user/avatar/${this.streamer.user.id}.webp`" alt="User Avatar" style="align-self: center;">
                             </div>
                             <div class="middle aligned content">
                                 <div class="left floated">
