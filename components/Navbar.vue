@@ -52,6 +52,11 @@
             async logout() {
                 await this.$auth.logout();
             }
+        },
+        mounted() {
+            $('.dropdown').dropdown({
+                on: 'hover'
+            });
         }
     }
 </script>

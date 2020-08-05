@@ -81,11 +81,6 @@
     export default {
         components: {
             Navbar
-        },
-        mounted() {
-            $('.dropdown').dropdown({
-                on: 'hover'
-            });
         }
     }
 </script>
