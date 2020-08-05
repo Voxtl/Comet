@@ -166,13 +166,7 @@
 
                 this.message = '';
             }
-        },
-        // mounted() {
-        //     let ovenplayerScript = document.createElement('script');
-        //     ovenplayerScript.setAttribute('src', 'https://azotosolutions.com/play/dist/development/ovenplayer/ovenplayer.js');
-        //
-        //     document.head.appendChild(ovenplayerScript);
-        // }
+        }
     }
 </script>
 
