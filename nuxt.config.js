@@ -42,7 +42,7 @@ export default {
     },
     auth: {
         redirect: {
-            login: '/login',
+            login: '/auth/login',
             home: '/'
         },
         strategies: {
