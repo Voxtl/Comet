@@ -77,12 +77,12 @@
                             player = OvenPlayer.create("player", {
                                 sources: [
                                     {
-                                        "file": 'ws://distribution-1.lon-uk.voxtl.com:3333/live/${this.streamer.user.id}_source',
+                                        "file": 'wss://distribution-1.lon-uk.voxtl.com:3334/live/${this.streamer.user.id}_source',
                                         "type": "webrtc",
                                         "label": "Source (Velocity)"
                                     },
                                     {
-                                        "file": 'http://distribution-1.lon-uk.voxtl.com/live/${this.streamer.user.id}_source/playlist.m3u8',
+                                        "file": 'https://distribution-1.lon-uk.voxtl.com/live/${this.streamer.user.id}_source/playlist.m3u8',
                                         "type": "hls",
                                         "label": "Source (HLS)"
                                     },
