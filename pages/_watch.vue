@@ -149,6 +149,16 @@
             }
         },
         asyncData(context) {
+            axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
+                console.log(res.data.result);
+
+                axios.get(`https://api.voxtl.tv/v1/category/${res.data.result.info.category}`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resp => {
+                    console.log(resp);
+                });
+            }).catch(error => {
+                console.error(error);
+            });
+
             return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/info`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
                 return {
                     streamer: res.data.result
