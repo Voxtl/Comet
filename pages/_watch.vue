@@ -125,10 +125,23 @@
                                 let data = JSON.parse(event.data);
                                 const id = randomString(8);
 
+                                console.log(data.badges);
+
+                                let badgeMarkup = '';
+
+                                data.badges.forEach(badge => {
+                                    badgeMarkup += '' +
+                                        '<span style="align-self: center;" data-tooltip="' + badge.name + '" data-position="top left" data-variation="mini">' +
+                                            '<i class="small bordered ' + badge.icon + ' icon" style="background-color: #' + badge.color + '; align-self: center; color: #ffffff;">' +
+                                            '</i>' +
+                                        '</span>';
+                                });
+
                                 let markup = '' +
                                     '<div class="item" style="display: flex; margin-bottom: 0.2em;">' +
                                         '<img class="ui avatar image" src="https://img.voxtl.tv/user/avatar/' + data.viewer.id + '.webp" style="align-self: center;">' +
                                         '<div class="content" style="display: flex;">' +
+                                            badgeMarkup +
                                             '<div class="header" style="font-size: 1.2em; align-self: center; color: #ffffff; font-weight: 700;">' + data.viewer.username + '</div>' +
                                             '<div class="description" style="font-size: 1em; align-self: center; margin-left: 0.4em; word-break: break-word; color: #BABABA;" id="' + id + '"></div>' +
                                         '</div>' +
