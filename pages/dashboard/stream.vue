@@ -13,11 +13,11 @@
                         <div class="ui form">
                             <div class="field">
                                 <label>Ingest Server</label>
-                                <input type="text" readonly="" value="rtmp://ingest.voxtl.tv/push">
+                                <input type="text" readonly="" value="rtmp://ingest-1.lon-gb.voxtl.com/push">
                             </div>
                             <div class="field">
                                 <label>Stream Key</label>
-                                <input type="text" readonly="" value="">
+                                <input type="text" readonly="" v-model="stream_key">
                             </div>
                         </div>
                     </div>
@@ -29,6 +29,7 @@
 
 <script>
     import Sidebar from '~/components/dashboard/Sidebar'
+    import axios from "axios";
 
     export default {
         name: 'start-streaming',
@@ -36,6 +37,18 @@
             return {
                 title: 'Start Streaming | Voxtl',
             }
+        },
+        data() {
+            return {
+                stream_key: ''
+            }
+        },
+        asyncData(context) {
+            return axios.get(`https://api.voxtl.tv/v1/user/@me/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resp => {
+                return {
+                    stream_key: resp.data.result.user.id + '--' + resp.data.result.private.stream_key
+                }
+            });
         },
         middleware: 'auth',
         components: {
