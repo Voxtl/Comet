@@ -13,7 +13,7 @@
                         <form class="ui form" @submit.prevent="updateStreamInfo">
                             <div class="field">
                                 <label>Stream Title</label>
-                                <input type="text" autocomplete="off" value="">
+                                <input type="text" autocomplete="off" v-model="stream_title">
                             </div>
                             <div class="field">
                                 <label>Stream Category</label>
@@ -65,13 +65,15 @@
         },
         data() {
             return {
+                stream_title: '',
                 stream_category: ''
             }
         },
         asyncData(context) {
-            return axios.get(`https://api.voxtl.tv/v1/user/${context.$auth.user.user.id}/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
+            return axios.get(`https://api.voxtl.tv/v1/user/@me/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
                 return axios.get(`https://api.voxtl.tv/v1/category/${res.data.result.info.category}`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resp => {
                     return {
+                        stream_title: res.data.result.info.title,
                         stream_category: resp.data.result.category.name
                     }
                 });
@@ -86,6 +88,7 @@
         methods: {
             async updateStreamInfo() {
                 let data = {
+                    'stream_title': this.stream_title,
                     'stream_category': this.stream_category
                 }
 
