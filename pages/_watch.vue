@@ -13,7 +13,7 @@
                             </div>
                             <div class="middle aligned content">
                                 <div class="left floated">
-                                    <h2 class="mb-0" style="font-size: 1.65em;">{{ this.streamer.user.username }}</h2>
+                                    <h2 class="mb-0" style="font-size: 1.65em;">{{ this.streamer.user.username }}: {{ this.streamerInfo.info.title }}</h2>
                                     <h3 class="mv-0"><span id="title"></span></h3>
                                     <div class="ui label">
                                         <i class="gamepad icon"></i>
@@ -77,12 +77,12 @@
                             player = OvenPlayer.create("player", {
                                 sources: [
                                     {
-                                        "file": 'wss://distribution-1.fra-de.voxtl.com:3334/live/${this.streamer.user.id}_source',
+                                        "file": 'wss://distribution-1.nue-de.voxtl.com:3334/live/${this.streamer.user.id}_source',
                                         "type": "webrtc",
                                         "label": "Source (Velocity)"
                                     },
                                     {
-                                        "file": 'https://distribution-1.fra-de.voxtl.com/live/${this.streamer.user.id}_source/playlist.m3u8',
+                                        "file": 'https://distribution-1.nue-de.voxtl.com/live/${this.streamer.user.id}_source/playlist.m3u8',
                                         "type": "hls",
                                         "label": "Source (HLS)"
                                     },
@@ -156,26 +156,23 @@
         data() {
             return {
                 ovenPlayerLoaded: false,
-                message: ''
+                message: '',
             }
         },
         asyncData(context) {
-            axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
-                console.log(res.data.result);
-
-                axios.get(`https://api.voxtl.tv/v1/category/${res.data.result.info.category}`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resp => {
-                    console.log(resp);
-                });
-            }).catch(error => {
-                console.error(error);
-            });
-
             return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/info`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
-                return {
-                    streamer: res.data.result
-                };
-            }).catch(error => {
-                console.error(error);
+                return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(ress => {
+                    axios.get(`https://api.voxtl.tv/v1/category/${ress.data.result.info.category}`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resss => {
+                        document.getElementById("category").innerText = resss.data.result.category.name;
+                    });
+
+                    console.log(res.data.result);
+
+                    return {
+                        streamer: res.data.result,
+                        streamerInfo: ress.data.result
+                    }
+                });
             });
         },
         methods: {

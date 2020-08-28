@@ -13,7 +13,7 @@
                         <div class="ui form">
                             <div class="field">
                                 <label>Ingest Server</label>
-                                <input type="text" readonly="" value="rtmp://ingest-1.lon-gb.voxtl.com/push">
+                                <input type="text" readonly="" value="rtmp://ingest-1.nue-de.voxtl.com/push">
                             </div>
                             <div class="field">
                                 <label>Stream Key</label>
