@@ -131,15 +131,7 @@
             async registerUser() {
                 await this.$axios.post('https://api.voxtl.tv/v1/internal/auth/register', this.register)
                     .then(res => {
-                        let resp = JSON.decode(res.data);
-
-                        if(resp.status === 200) {
-                            this.$router.push('/auth/login')
-                        } else {
-                            this.error.shown = true;
-                            this.error.type = 'error';
-                            this.error.message = err.response.data;
-                        }
+                        this.$router.push('/auth/login');
                     })
                     .catch(err => {
                         this.error.shown = true;
