@@ -17,7 +17,7 @@
                                     <h3 class="mv-0"><span id="title"></span></h3>
                                     <div class="ui label">
                                         <i class="gamepad icon"></i>
-                                        <span id="category">Loading...</span>
+                                        <span id="category">{{ this.streamerInfo.category.name }}</span>
                                     </div>
                                     <div class="ui label">
                                         <i class="users icon"></i>
@@ -27,7 +27,7 @@
                                 <div class="right floated" style="text-align: right;">
                                     <div class="ui label">
                                         <i class="eye icon"></i>
-                                        <span id="viewers">0</span>
+                                        <span id="viewers">{{ this.streamerInfo.viewers.count }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -162,12 +162,6 @@
         asyncData(context) {
             return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/info`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
                 return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(ress => {
-                    axios.get(`https://api.voxtl.tv/v1/category/${ress.data.result.info.category}`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resss => {
-                        document.getElementById("category").innerText = resss.data.result.category.name;
-                    });
-
-                    console.log(res.data.result);
-
                     return {
                         streamer: res.data.result,
                         streamerInfo: ress.data.result
@@ -184,6 +178,16 @@
 
                 this.message = '';
             }
+        },
+        mounted() {
+            window.setInterval(() => {
+                axios.get(`https://api.voxtl.tv/v1/user/${this.streamer.user.id}/info`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then(res => {
+                    axios.get(`https://api.voxtl.tv/v1/user/${this.streamer.user.id}/stream`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then(ress => {
+                        this.streamer = res.data.result;
+                        this.streamerInfo = ress.data.result;
+                    });
+                });
+            }, 5000);
         }
     }
 </script>
