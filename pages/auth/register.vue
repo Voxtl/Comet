@@ -144,7 +144,7 @@
                     .catch(err => {
                         this.error.shown = true;
                         this.error.type = 'error';
-                        this.error.message = err.response;
+                        this.error.message = err.response.data;
                     })
             }
         }
