@@ -71,12 +71,10 @@
         },
         asyncData(context) {
             return axios.get(`https://api.voxtl.tv/v1/user/@me/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
-                return axios.get(`https://api.voxtl.tv/v1/category/${res.data.result.info.category}`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resp => {
-                    return {
-                        stream_title: res.data.result.info.title,
-                        stream_category: resp.data.result.category.name
-                    }
-                });
+                return {
+                    stream_title: res.data.result.info.title,
+                    stream_category: res.data.result.category.name
+                }
             }).catch(error => {
                 console.error(error);
             });
