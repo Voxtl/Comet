@@ -38,13 +38,11 @@
         },
         async fetch() {
             await axios.get('https://api.voxtl.tv/v1/stream/top').then((res) => {
-                if(res.data.result !== null) {
-                    res.data.result.forEach(stream => {
-                        axios.get(`https://api.voxtl.tv/v1/user/${stream.username}/stream`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then((res) => {
-                            this.streams.push(res.data.result);
-                        });
+                res.data.result?.forEach(stream => {
+                    axios.get(`https://api.voxtl.tv/v1/user/${stream.username}/stream`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then((res) => {
+                        this.streams.push(res.data.result);
                     });
-                }
+                });
             });
         },
         components: {
