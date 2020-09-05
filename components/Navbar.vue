@@ -8,7 +8,7 @@
             <nuxt-link to="/dashboard/stream" class="item" exact-active-class="active">Start Streaming</nuxt-link>
 
             <div class="right menu" v-if="this.$auth.loggedIn">
-                <div class="ui dropdown item">
+                <div class="ui simple dropdown item">
                     <div class="item p-0"><img class="ui avatar image" :src="`https://img.voxtl.tv/user/avatar/${this.$auth.user.user.id}.webp`"></div>
                     <div class="text">{{ this.$auth.user.user.username }}</div>
                     <i class="dropdown icon"></i>
@@ -52,11 +52,6 @@
             async logout() {
                 await this.$auth.logout();
             }
-        },
-        mounted() {
-            $('.dropdown').dropdown({
-                on: 'hover'
-            });
         }
     }
 </script>
