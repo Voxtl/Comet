@@ -17,7 +17,10 @@
                             </div>
                             <div class="field">
                                 <label>Stream Key</label>
-                                <input type="text" readonly="" v-model="stream_key">
+                                <div class="ui action input">
+                                    <input type="text" readonly="" v-bind:value="shownStreamKey">
+                                    <button class="ui button" v-on:click="stream_key_shown=!stream_key_shown">{{ stream_key_shown ? "Hide" : "Show" }}</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -40,7 +43,17 @@
         },
         data() {
             return {
-                stream_key: ''
+                stream_key: '',
+                stream_key_shown: false
+            }
+        },
+        computed: {
+            shownStreamKey: function() {
+                if(this.stream_key_shown) {
+                    return this.stream_key;
+                } else {
+                    return [...this.stream_key].fill("*").join("")
+                }
             }
         },
         asyncData(context) {
