@@ -69,9 +69,8 @@
                             'Content-Type': 'multipart/form-data',
                             'Authorization': this.$auth.getToken('local')
                         }
-                    }).then(res => {
-                        console.log(res.data);
-                        console.log('Avatar updated.');
+                    }).then(() => {
+                        this.$router.push('/settings/profile');
                     }).catch(err => {
                         console.log(err);
                     });
