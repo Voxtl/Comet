@@ -43,7 +43,7 @@ export default {
     auth: {
         redirect: {
             login: '/auth/login',
-            home: '/'
+            home: false
         },
         strategies: {
             local: {
