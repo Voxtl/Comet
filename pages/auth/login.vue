@@ -52,7 +52,9 @@
             async loginUser() {
                 await this.$auth.logout();
                 await this.$auth.loginWith('local', { data: this.login })
-                    .then()
+                    .then(res => {
+                        this.$router.push('/');
+                    })
                     .catch(err => {
                         this.error.shown = true;
                         this.error.type = 'error';
