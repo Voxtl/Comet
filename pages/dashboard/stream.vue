@@ -20,6 +20,7 @@
                                 <div class="ui action input">
                                     <input type="text" readonly="" v-bind:value="shownStreamKey">
                                     <button class="ui button" v-on:click="stream_key_shown=!stream_key_shown">{{ stream_key_shown ? "Hide" : "Show" }}</button>
+                                    <button class="ui button" v-on:click="copyStreamKey">Copy</button>
                                 </div>
                             </div>
                         </div>
@@ -54,6 +55,11 @@
                 } else {
                     return [...this.stream_key].fill("*").join("")
                 }
+            }
+        },
+        methods: {
+            copyStreamKey: function() {
+                navigator.clipboard.writeText(this.stream_key)
             }
         },
         asyncData(context) {
