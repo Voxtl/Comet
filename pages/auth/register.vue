@@ -133,7 +133,7 @@
                     username: this.register.username,
                     email: this.register.email,
                     password: this.register.password,
-                    dob: `${birthday}-${birthmonth}-${birthyear}`
+                    dob: `${this.register.birthday}-${this.register.birthmonth}-${this.register.birthyear}`
                 }
 
                 await this.$axios.post('https://auth.voxtl.tv/account/register', data)
