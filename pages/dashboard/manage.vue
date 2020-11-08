@@ -42,41 +42,41 @@
         head() {
             return {
                 title: 'Manage | Voxtl',
-                script: [
-                    {
-                        innerHTML: `
-                            $('#category-search')
-                                .dropdown({
-                                    apiSettings: {
-                                        url: 'https://api.voxtl.tv/v1/category/search/{query}',
-                                        beforeXHR: function(xhr) {
-                                            xhr.setRequestHeader('Authorization', '${this.$auth.getToken('local')}');
-                                            return xhr;
-                                        },
-                                        onResponse: function(res) {
-                                            let response = {
-                                                success: true,
-                                                results: []
-                                            };
+                // script: [
+                //     {
+                //         innerHTML: `
+                //             $('#category-search')
+                //                 .dropdown({
+                //                     apiSettings: {
+                //                         url: 'https://api.voxtl.tv/v1/category/search/{query}',
+                //                         beforeXHR: function(xhr) {
+                //                             xhr.setRequestHeader('Authorization', '${this.$auth.getToken('local')}');
+                //                             return xhr;
+                //                         },
+                //                         onResponse: function(res) {
+                //                             let response = {
+                //                                 success: true,
+                //                                 results: []
+                //                             };
 
-                                            if(!res.result) {
-                                                return;
-                                            }
+                //                             if(!res.result) {
+                //                                 return;
+                //                             }
 
-                                            $.each(res.result, function(index, item) {
-                                                response.results.push({
-                                                   name: item.name,
-                                                   value: item.slug,
-                                                });
-                                            });
+                //                             $.each(res.result, function(index, item) {
+                //                                 response.results.push({
+                //                                    name: item.name,
+                //                                    value: item.slug,
+                //                                 });
+                //                             });
 
-                                            return response;
-                                        }
-                                    }
-                                });
-                        `
-                    }
-                ]
+                //                             return response;
+                //                         }
+                //                     }
+                //                 });
+                //         `
+                //     }
+                // ]
             }
         },
         data() {
@@ -88,10 +88,10 @@
             }
         },
         asyncData(context) {
-            return axios.get(`https://api.voxtl.tv/v1/user/@me/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
+            return axios.get(`https://api.voxtl.tv/users/@me/channel`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
                 return {
-                    stream_title: res.data.result.info.title,
-                    stream_category_name: res.data.result.category.name
+                    stream_title: res.data.result.channel.title,
+                    stream_category_name: res.data.result.channel.category
                 }
             }).catch(error => {
                 console.error(error);
@@ -108,14 +108,14 @@
                     'stream_category': this.stream_category
                 }
 
-                console.log(this.stream_category);
+                // console.log(this.stream_category);
 
-                await this.$axios.post('https://api.voxtl.tv/v1/internal/update/dashboard/manage', data)
-                    .then(res => {
-                        console.log(res);
-                    }).catch(err => {
-                        console.log(err);
-                    })
+                // await this.$axios.post('https://api.voxtl.tv/v1/internal/update/dashboard/manage', data)
+                //     .then(res => {
+                //         console.log(res);
+                //     }).catch(err => {
+                //         console.log(err);
+                //     })
             },
             async categorySearch() {
                 console.log('search');

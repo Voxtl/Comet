@@ -9,15 +9,15 @@
                     <div class="ui items">
                         <div class="ui item">
                             <div class="ui tiny circular image" style="display: flex;">
-                                <img :src="`https://img.voxtl.tv/user/avatar/${this.streamer.user.id}.webp`" alt="User Avatar" style="align-self: center;">
+                                <img :src="`https://img.voxtl.tv/user/avatar/${this.streamer.profile.avatar}.webp`" alt="User Avatar" style="align-self: center;">
                             </div>
                             <div class="middle aligned content">
                                 <div class="left floated">
-                                    <h2 class="mb-0" style="font-size: 1.65em;">{{ this.streamer.user.username }}: {{ this.streamerInfo.info.title }}</h2>
+                                    <h2 class="mb-0" style="font-size: 1.65em;">{{ this.streamer.user.username }}: {{ this.streamerInfo.channel.title }}</h2>
                                     <h3 class="mv-0"><span id="title"></span></h3>
                                     <div class="ui label">
                                         <i class="gamepad icon"></i>
-                                        <span id="category">{{ this.streamerInfo.category.name }}</span>
+                                        <span id="category">{{ this.streamerInfo.channel.category }}</span>
                                     </div>
                                     <div class="ui label">
                                         <i class="users icon"></i>
@@ -27,7 +27,7 @@
                                 <div class="right floated" style="text-align: right;">
                                     <div class="ui label">
                                         <i class="eye icon"></i>
-                                        <span id="viewers">{{ this.streamerInfo.viewers.count }}</span>
+                                        <span id="viewers">{{ this.streamerInfo.channel.viewers.count }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -160,8 +160,8 @@
             }
         },
         asyncData(context) {
-            return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/info`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
-                return axios.get(`https://api.voxtl.tv/v1/user/${context.params.watch}/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(ress => {
+            return axios.get(`https://api.voxtl.tv/users/${context.params.watch}/profile`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(res => {
+                return axios.get(`https://api.voxtl.tv/users/${context.params.watch}/channel`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(ress => {
                     return {
                         streamer: res.data.result,
                         streamerInfo: ress.data.result
@@ -181,8 +181,8 @@
         },
         mounted() {
             window.setInterval(() => {
-                axios.get(`https://api.voxtl.tv/v1/user/${this.streamer.user.id}/info`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then(res => {
-                    axios.get(`https://api.voxtl.tv/v1/user/${this.streamer.user.id}/stream`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then(ress => {
+                axios.get(`https://api.voxtl.tv/users/${context.params.watch}/profile`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then(res => {
+                    axios.get(`https://api.voxtl.tv/users/${context.params.watch}/channel`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then(ress => {
                         this.streamer = res.data.result;
                         this.streamerInfo = ress.data.result;
                     });

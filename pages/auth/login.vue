@@ -13,7 +13,7 @@
                     <form class="ui form" method="post" @submit.prevent="loginUser">
                         <div class="field">
                             <label class="color white">Username</label>
-                            <input type="text" v-model="login.username" autocomplete="username">
+                            <input type="text" v-model="login.user" autocomplete="username">
                         </div>
 
                         <div class="field">
@@ -38,7 +38,7 @@
         data() {
             return {
                 login: {
-                    username: '',
+                    user: '',
                     password: ''
                 },
                 error: {

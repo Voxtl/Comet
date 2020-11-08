@@ -9,7 +9,7 @@
 
             <div class="right menu" v-if="this.$auth.loggedIn">
                 <div class="ui simple dropdown item">
-                    <div class="item p-0"><img class="ui avatar image" :src="`https://img.voxtl.tv/user/avatar/${this.$auth.user.user.id}.webp`"></div>
+                    <div class="item p-0"><img class="ui avatar image" :src="`https://img.voxtl.tv/user/avatar/${this.$auth.user.profile.avatar}.webp`"></div>
                     <div class="text">{{ this.$auth.user.user.username }}</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">

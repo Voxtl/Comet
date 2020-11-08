@@ -29,7 +29,7 @@ export default {
         ['nuxt-matomo', { matomoUrl: 'https://analytics.voxtl.tv/', siteId: 1 }]
     ],
     axios: {
-        baseURL: 'https://api.voxtl.tv/'
+        baseURL: 'https://auth.voxtl.tv/'
     },
     build: {
         postcss: {
@@ -48,9 +48,9 @@ export default {
         strategies: {
             local: {
                 endpoints: {
-                    login: { url: '/v1/internal/auth/login', method: 'post', propertyName: 'result.token' },
+                    login: { url: '/account/login', method: 'post', propertyName: 'access_token' },
                     logout: false,
-                    user: { url: '/v1/user/@me/info', method: 'get', propertyName: 'result' }
+                    user: { url: 'https://api.voxtl.tv/users/@me/profile', method: 'get', propertyName: 'result' }
                 }
             }
         },
