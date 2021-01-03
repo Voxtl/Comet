@@ -25,12 +25,9 @@ export default {
     buildModules: [],
     modules: [
         '@nuxtjs/axios',
-        '@nuxtjs/auth',
-        ['nuxt-matomo', { matomoUrl: 'https://analytics.voxtl.tv/', siteId: 1 }]
+        '@nuxtjs/auth-next',
+        ['nuxt-matomo', { matomoUrl: 'https://analytics.voxtl.tv/', siteId: 1 }],
     ],
-    axios: {
-        baseURL: 'https://api.voxtl.tv/'
-    },
     build: {
         postcss: {
             preset: {
@@ -40,20 +37,36 @@ export default {
             }
         },
     },
+    axios: {
+        baseURL: 'https://api.voxtl.tv',
+    },
     auth: {
-        redirect: {
-            login: '/auth/login',
-            home: false
-        },
         strategies: {
             local: {
+                // scheme: 'refresh',
+                token: {
+                    property: 'access_token',
+                    maxAge: 3600
+                },
+                // refreshToken: {
+                //     property: 'refresh_token',
+                //     data: 'refresh_token',
+                //     maxAge: 60 * 60 * 24 * 30,
+                // },
+                user: {
+                    property: 'result',
+                    authFetch: false,
+                },
                 endpoints: {
-                    login: { url: '/v1/internal/auth/login', method: 'post', propertyName: 'result.token' },
-                    logout: false,
-                    user: { url: '/v1/user/@me/info', method: 'get', propertyName: 'result' }
-                }
-            }
+                    login: { url: 'https://auth.voxtl.tv/auth/login', method: 'post' },
+                    refresh: false, // { url: '/api/auth/refresh', method: 'post' },
+                    user: { url: 'users/@me/profile', method: 'get'},
+                    logout: false, // { url: '/api/auth/logout', method: 'post' }
+                },
+            },
         },
-        resetOnError: true
-    }
-}
+    },
+    server: {
+        port: 2999,
+    },
+};
