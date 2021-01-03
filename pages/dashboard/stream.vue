@@ -63,9 +63,9 @@
             }
         },
         asyncData(context) {
-            return axios.get(`https://api.voxtl.tv/v1/user/@me/stream`, { headers: { 'Authorization': `${context.$auth.getToken('local')}` } }).then(resp => {
+            return context.$axios.get(`usesr/@me/channel/key`, { headers: { 'Authorization': `${context.$auth.strategy.token.get()}` } }).then(resp => {
                 return {
-                    stream_key: resp.data.result.user.id + '--' + resp.data.result.private.stream_key
+                    stream_key: resp.data.result.user.id + resp.data.result.channel.stream_key
                 }
             });
         },

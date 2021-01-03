@@ -39,7 +39,10 @@
             return {
                 login: {
                     username: '',
-                    password: ''
+                    password: '',
+                    grant_type: 'password',
+                    client_id: 'null',
+                    client_secret: 'null',
                 },
                 error: {
                     shown: false,
@@ -52,9 +55,7 @@
             async loginUser() {
                 await this.$auth.logout();
                 await this.$auth.loginWith('local', { data: this.login })
-                    .then(res => {
-                        this.$router.push('/');
-                    })
+                    .then(res => {})
                     .catch(err => {
                         this.error.shown = true;
                         this.error.type = 'error';

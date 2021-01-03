@@ -129,7 +129,14 @@
         },
         methods: {
             async registerUser() {
-                await this.$axios.post('https://api.voxtl.tv/v1/internal/auth/register', this.register)
+                let data = {
+                    username: this.register.username,
+                    email: this.register.email,
+                    password: this.register.password,
+                    dob: `${this.register.birthday}-${this.register.birthmonth}-${this.register.birthyear}`
+                };
+
+                await this.$axios.post('https://auth.voxtl.tv/account/register', data)
                     .then(res => {
                         this.$router.push('/auth/login');
                     })

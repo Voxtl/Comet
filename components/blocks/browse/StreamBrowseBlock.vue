@@ -6,9 +6,9 @@
         <div class="content">
             <div class="header">{{ stream.user.username }}</div>
             <p>
-                {{ stream.category.name }}
+                {{ stream.category.category }}
                 <br>
-                <i class="eye icon"></i> {{ stream.viewers.count }}
+                <i class="eye icon"></i> {{ stream.channel.viewers.count }}
             </p>
         </div>
     </nuxt-link>

@@ -37,9 +37,9 @@
             }
         },
         async fetch() {
-            await axios.get('https://api.voxtl.tv/v1/stream/top').then((res) => {
+            await this.$axios.get('channels/all', { headers: { 'Authorization': `${this.$auth.strategy.token.get()}` } }).then((res) => {
                 res.data.result?.forEach(stream => {
-                    axios.get(`https://api.voxtl.tv/v1/user/${stream.username}/stream`, { headers: { 'Authorization': `${this.$auth.getToken('local')}` } }).then((res) => {
+                    this.$axios.get(`users/${stream.username}/channel`, { headers: { 'Authorization': `${this.$auth.strategy.token.get()}` } }).then((res) => {
                         this.streams.push(res.data.result);
                     });
                 });
