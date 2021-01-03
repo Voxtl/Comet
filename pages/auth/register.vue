@@ -136,7 +136,7 @@
                     dob: `${this.register.birthday}-${this.register.birthmonth}-${this.register.birthyear}`
                 };
 
-                await this.$axios.post('https://auth.voxtl.tv/account/register', data)
+                await this.$axios.post('https://auth.voxtl.tv/auth/register', data)
                     .then(res => {
                         this.$router.push('/auth/login');
                     })
