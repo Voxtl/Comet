@@ -63,7 +63,7 @@
             }
         },
         asyncData(context) {
-            return context.$axios.get(`usesr/@me/channel/key`, { headers: { 'Authorization': `${context.$auth.strategy.token.get()}` } }).then(resp => {
+            return context.$axios.get(`users/@me/channel/key`, { headers: { 'Authorization': `${context.$auth.strategy.token.get()}` } }).then(resp => {
                 return {
                     stream_key: resp.data.result.user.id + resp.data.result.channel.stream_key
                 }
