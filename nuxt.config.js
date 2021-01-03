@@ -2,11 +2,11 @@ export default {
     mode: 'spa',
     target: 'static',
     head: {
-        title: process.env.npm_package_name || 'Voxtl',
+        title: 'Voxtl',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+            { hid: 'description', name: 'description', content: 'Voxtl. Next generation streaming.' }
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: 'https://static.voxtl.tv/favicons/favicon.ico' },
@@ -17,12 +17,13 @@ export default {
             { src: 'https://static.voxtl.tv/fomantic/semantic.min.js' }
         ]
     },
-    css: [],
+    generate: {
+        fallback: true,
+    },
     plugins: [
         { src: '@/plugins/vue-content-placeholders.js' }
     ],
     components: true,
-    buildModules: [],
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/auth-next'
@@ -64,8 +65,5 @@ export default {
                 },
             },
         },
-    },
-    server: {
-        port: 2999,
     },
 };
