@@ -25,8 +25,7 @@ export default {
     buildModules: [],
     modules: [
         '@nuxtjs/axios',
-        '@nuxtjs/auth-next',
-        ['nuxt-matomo', { matomoUrl: 'https://analytics.voxtl.tv/', siteId: 1 }],
+        '@nuxtjs/auth-next'
     ],
     build: {
         postcss: {
