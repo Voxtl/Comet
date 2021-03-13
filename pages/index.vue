@@ -17,6 +17,15 @@
             }
         }
     }
+
+    // Eastereggs
+    var keys = '';
+    window.addEventListener('keypress', function (e) {
+        keys += `${String.fromCharCode(e.keyCode)}`;
+        console.log(keys);
+        if (keys.includes('adam')) window.location.replace('https://www.twitch.tv/fudgeyofficial');
+        if (keys.includes('luke')) window.location.replace('https://www.twitch.tv/squashytomato');
+    });
 </script>
 
 <style>
